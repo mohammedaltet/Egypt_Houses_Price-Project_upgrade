@@ -123,7 +123,7 @@ def main():
     Level = st.selectbox("The Floor Of The  Property" , [ 1, 10,  0, 12,  3,  2, 11,  9,  4,  5,  8,  6,  7])
     Payment_Option = st.selectbox("Payment Option" , ['Cash', 'Cash or Installment', 'Unknown Payment', 'Installment'])
     Delivery_Term = st.selectbox("Delivery Term" , ['Finished', 'Semi Finished', 'Core & Shell', 'Not Finished'])
-    City = st.selectbox('City:', list(Area_dic.keys()))
+    City = st.selectbox('City:', list(city_range.keys()))
     
 
     if st.button("Predict"):
