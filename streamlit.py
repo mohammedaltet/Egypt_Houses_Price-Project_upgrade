@@ -173,8 +173,8 @@ city_per_m = {'Nakheel': 2643.64406779661,
  'Mokattam': 23248.16122667959,
  'Giza District': 28863.82393397524,
  'Gouna': 52036.84030157642}
-Inputs = joblib.load("Inputs.pkl")
-Model = joblib.load("Model.pkl")
+Inputs = joblib.load("features.h5")
+Model = joblib.load("model.h5")
 
 def predict(Type, Bedrooms, Bathrooms, Area, Furnished,Level, Payment_Option, Delivery_Term,City,meter_Price):
     test_df = pd.DataFrame(columns = Inputs)
