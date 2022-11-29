@@ -88,8 +88,8 @@ city_range = {'Abu Talat': 0,
  'Rehab City': 83,
  'Gouna': 84,
  'Giza District': 85}
-Inputs = joblib.load("Inputs.pkl")
-Model = joblib.load("Model.pkl")
+Inputs = joblib.load("Inputs1.pkl")
+Model = joblib.load("Model1.pkl")
 
 def predict(Type, Bedrooms, Bathrooms, Area, Furnished,Level, Payment_Option, Delivery_Term,City):
     test_df = pd.DataFrame(columns = Inputs)
