@@ -1,7 +1,6 @@
 import pickle
 import streamlit as st
 import pandas as pd
-from sklearn.neighbors import KNeighborsClassifier
  
 
 city_range = {'Abu Talat': 0,
