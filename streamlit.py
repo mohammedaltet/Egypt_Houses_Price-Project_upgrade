@@ -1,6 +1,8 @@
+import pickle
 import streamlit as st
-import joblib 
 import pandas as pd
+from sklearn.neighbors import KNeighborsClassifier
+ 
 
 city_range = {'Abu Talat': 0,
  'Nakheel': 1,
@@ -91,43 +93,33 @@ city_range = {'Abu Talat': 0,
 Inputs = joblib.load("Inputs1.pkl")
 Model = joblib.load("Model1.pkl")
 
+# Define the prediction function
 def predict(Type, Bedrooms, Bathrooms, Area, Furnished,Level, Payment_Option, Delivery_Term,City):
-    test_df = pd.DataFrame(columns = Inputs)
-    test_df.at[0,"Type"] = Type
-    test_df.at[0,"Bedrooms"] = Bedrooms
-    test_df.at[0,"Bathrooms"] = Bathrooms
-    test_df.at[0,"Area"] = Area
-    test_df.at[0,"Furnished"] = Furnished
-    test_df.at[0,"Level"] = Level
-    test_df.at[0,"Payment_Option"] = Payment_Option
-    test_df.at[0,"Delivery_Term"] = Delivery_Term  
-    result = Model.predict(test_df)[0]
+    
     if City in city_range:
         City = city_range[City]
         return City
     else :
         City = 'The Area Not Found'
         return City
-    
-    
-def main():
-    st.title("Egypt Houses Price App")
-    st.image("""https://realestate.eg/ckfinder/userfiles/images/mountain-view-3-new-cairo/Seperat%20Villas%20in%20Mountain%20View%20III.png""")
-    st.header('Enter the House details:')
-    Type = st.selectbox("The Type of The Property" , ['Apartment', 'Duplex', 'Penthouse', 'Studio', 'Chalet',
-    'Twin House', 'Stand Alone Villa', 'Town House'])
-    Bedrooms = st.number_input('Bedrooms Number :', min_value=1, max_value=11, value=1)
-    Bathrooms = st.number_input('Bathrooms Number :', min_value=1, max_value=11, value=1) 
-    Area = st.slider("The Area Of The House" , min_value=0, max_value=1000, value=0, step=1)
-    Furnished = st.selectbox("Furnished" ,['Yes', 'No'])
-    Level = st.selectbox("The Floor Of The  Property" , [ 1, 10,  0, 12,  3,  2, 11,  9,  4,  5,  8,  6,  7])
-    Payment_Option = st.selectbox("Payment Option" , ['Cash', 'Cash or Installment', 'Unknown Payment', 'Installment'])
-    Delivery_Term = st.selectbox("Delivery Term" , ['Finished', 'Semi Finished', 'Core & Shell', 'Not Finished'])
-    City = st.selectbox('City:', list(city_range.keys()))
-    
+    prediction = model.predict(pd.DataFrame([[Type, Bedrooms, Bathrooms, Area, Furnished,Level, Payment_Option, Delivery_Term,City]], columns=['Type', 'Bedrooms', 'Bathrooms', 'Area', 'Furnished','Level', 'Payment_Option', 'Delivery_Term','City']))
+    return prediction
 
-    if st.button("Predict"):
-        result = predict(Type, Bedrooms, Bathrooms, Area, Furnished,Level, Payment_Option, Delivery_Term,City)
-        st.success(f'The Price of the house is {result} EGP')
-if __name__ == '__main__':
-    main()
+
+st.title("Egypt Houses Price App")
+st.image("""https://realestate.eg/ckfinder/userfiles/images/mountain-view-3-new-cairo/Seperat%20Villas%20in%20Mountain%20View%20III.png""")
+st.header('Enter the House details:')
+Type = st.selectbox("The Type of The Property" , ['Apartment', 'Duplex', 'Penthouse', 'Studio', 'Chalet',
+'Twin House', 'Stand Alone Villa', 'Town House'])
+Bedrooms = st.number_input('Bedrooms Number :', min_value=1, max_value=11, value=1)
+Bathrooms = st.number_input('Bathrooms Number :', min_value=1, max_value=11, value=1) 
+Area = st.slider("The Area Of The House" , min_value=0, max_value=1000, value=0, step=1)
+Furnished = st.selectbox("Furnished" ,['Yes', 'No'])
+Level = st.selectbox("The Floor Of The  Property" , [ 1, 10,  0, 12,  3,  2, 11,  9,  4,  5,  8,  6,  7])
+Payment_Option = st.selectbox("Payment Option" , ['Cash', 'Cash or Installment', 'Unknown Payment', 'Installment'])
+Delivery_Term = st.selectbox("Delivery Term" , ['Finished', 'Semi Finished', 'Core & Shell', 'Not Finished'])
+City = st.selectbox('City:', list(city_range.keys()))
+
+if st.button("Predict The Price Of The House"):
+    result = predict(Type, Bedrooms, Bathrooms, Area, Furnished,Level, Payment_Option, Delivery_Term,City)
+    st.success(f'The Price of the house is {result} EGP')
