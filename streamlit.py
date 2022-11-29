@@ -1,7 +1,7 @@
 import joblib 
 import streamlit as st
 import pandas as pd
- 
+from xgboost import XGBRegressor
 
 city_range = {'Abu Talat': 0,
  'Nakheel': 1,
